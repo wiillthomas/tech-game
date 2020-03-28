@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './styles/index.scss';
 
 import TimeContainer from "./components/TimeContainer"
 import UpgradeButton from "./components/UpgradeButton"
@@ -116,8 +115,10 @@ class App extends Component {
     return (
       <>
         { gameOver ? "game over" : null }
-        <TimeContainer time={time} />
-        <div>Cash: ${ cash }</div>
+        <div class="header">
+          <div className={`header__cash ${ users < wageBill ? "header__cash--negative" : null }`}  >Cash: ${ cash }</div>
+          <div class="header__time"><TimeContainer time={time} /></div>
+        </div>
         <div>User Growth: { userGrowth }</div>
         <div>User Churn: { userChurn }</div>
         <div>Wage Bill: ${ wageBill }</div>

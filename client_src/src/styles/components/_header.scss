@@ -1,0 +1,18 @@
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &__cash {
+        padding: 25px 0;
+        color: #03daC6;
+        &--negative {
+            color: #CF6679;
+        }
+    }
+    &__time {
+        position: absolute;
+        right: 50px;
+        top: 50p
+    }
+}
