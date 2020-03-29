@@ -11,9 +11,9 @@ export default function App() {
 
 }
  
-// Create random events
 // Create game over screen & upload high score
 // Create Start Screen
 // Responsivity
 // Go backend for high scores
 // Create more random events
+// Write FE tests

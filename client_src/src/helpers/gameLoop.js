@@ -8,7 +8,8 @@ export default ( state ) => {
             eventsChange: events, 
             productChange: productScore, 
             userChurn: 0, 
-            userChange:null
+            userChange:null,
+            cashChange: cash
         }
 
         if ( users / 350 > devResources ) {
@@ -46,11 +47,14 @@ export default ( state ) => {
 
         output.userChange = ( users + userGrowth ) - ( output.userChurn * users );
 
-        const eventIntervals = [10, 25, 35]
+        const eventIntervals = [10, 25]
 
-        if ( Math.random() * 100 > 95 || eventIntervals.includes(time) ) {
+        if ( Math.random() * 100 > 98  || eventIntervals.includes(time) ) {
             output.eventsChange = [...events]
-            output.eventsChange.push(randomEvents[Math.round( Math.random() * randomEvents.length )])
+            output.eventsChange.push(randomEvents[Math.floor( Math.random() * randomEvents.length )])
+            
+            output.userChange = output.userChange * randomEvents[Math.floor( Math.random() * randomEvents.length )].users
+            output.cashChange = output.cashChange * randomEvents[Math.floor( Math.random() * randomEvents.length )].cash
         } else {
             output.eventsChange = events
         }

@@ -6,6 +6,9 @@ import UpgradeButton from "../components/UpgradeButton"
 import CurrencyDisplay from "../components/CurrencyDisplay"
 import RandomEventsContainer from "../components/RandomEventsContainer"
 
+import GameOverModal from "../components/modals/GameOverModal";
+import HelpModal from "../components/modals/HelpModal"
+
 import gameLoop from "../helpers/gameLoop"
 import randomEvents from "../helpers/randomEvents"
 import upgrades from "../helpers/upgrades"
@@ -15,6 +18,7 @@ class App extends Component {
     super(props);
     this.state = {
       play: true,
+      helpModal: false,
       gameOver: false,
       time: 1,
       cash: 10000,
@@ -40,13 +44,13 @@ class App extends Component {
         })
 
       } else if ( play ) {
-        const { playChange, eventsChange, productChange, userChurn, userChange } = gameLoop( this.state )
+        const { playChange, eventsChange, productChange, userChurn, userChange, cashChange } = gameLoop( this.state )
 
         this.setState({
           play: playChange,
           time: time + 1,
           events: eventsChange,
-          cash: Math.round(cash + ( users ) - wageBill),
+          cash: Math.round(cashChange + ( users ) - wageBill),
           productScore: Math.round(productChange),
           userChurn: userChurn,
           users: Math.round( userChange )
@@ -55,6 +59,15 @@ class App extends Component {
       }
     }, 1000);
   
+  }
+
+  toggleHelp = () => {
+    const { play, helpModal } = this.state
+
+    this.setState({
+      play: play ? false : true,
+      helpModal: helpModal ? false : true,
+    })
   }
   
   handleUpgradeClick = ( cost, addedUsers, addedUserGrowth, addedDevResource, addedWage ) => {
@@ -73,15 +86,19 @@ class App extends Component {
 
 
   render() { 
-    const { cash, users, productScore, time, devResources, userGrowth, userChurn, wageBill, gameOver, events } = this.state;
-    const { handleUpgradeClick } = this;
+    const { cash, users, productScore, time, devResources, userGrowth, userChurn, wageBill, gameOver, events, helpModal } = this.state;
+    const { handleUpgradeClick, toggleHelp } = this;
 
     return (
       <>
-        { gameOver ? "game over" : null }
+        { gameOver ? <GameOverModal users={users} /> : null }
+        { helpModal ? <HelpModal toggleHelp={toggleHelp} /> : null }
         <div className="header">
           <div className={`header__cash ${ users < wageBill ? "header__cash--negative" : null }`}  >
             <CurrencyDisplay value={cash} />
+          </div>
+          <div className="header__help">
+            <button className="button" onClick={() => toggleHelp()}>Help</button>
           </div>
           <div className="header__time"><TimeContainer time={time} /></div>
         </div>
@@ -91,7 +108,7 @@ class App extends Component {
               <div className="stats__section">
                 <div><span>👥 Users: { users }<span>MRR: ${ users }</span></span></div>
                 <div>📈 Growth: +{ userGrowth } p/m</div>
-                <div>📉 Churn: { userChurn } p/m</div>
+                <div>📉 Churn: { userChurn > 0 ? userChurn * 100 : 0 }% p/m</div>
               </div>
               <div className="stats__section">
                 <div><span className={`${ users / 200 > devResources ? "negative" : "" }`}>💻 Product Score: { productScore }/100</span></div>

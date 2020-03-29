@@ -1,7 +1,7 @@
 export default [
     {
         name: "Data Breach!",
-        description: "You suffered a data breach :( User hashed CC info was not leaked.",
+        description: "You suffered a data breach :( Hashed CC info was not leaked.",
         cash: 0.8,
         users: 0.8
 
