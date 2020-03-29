@@ -1,0 +1,35 @@
+.upgrades {
+    &__container {
+        display: flex;
+        width: 650px;
+        flex-direction: row;
+    }
+    &__wrapper {
+        width: 60%;
+        display: flex;
+        justify-content: center;
+        height: 100%;
+    }
+    &__column {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        .button.upgrade {
+            position: relative;
+            margin: 5px;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            div.name {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+            div {
+                width: 50%;
+                text-align: left;
+                user-select: none;
+            }
+        }
+    }
+}

@@ -3,6 +3,7 @@ import './styles/index.scss';
 
 import TimeContainer from "./components/TimeContainer"
 import UpgradeButton from "./components/UpgradeButton"
+import CurrencyDisplay from "./components/CurrencyDisplay"
 
 import randomEvents from "./helpers/randomEvents"
 import upgrades from "./helpers/upgrades"
@@ -115,18 +116,41 @@ class App extends Component {
     return (
       <>
         { gameOver ? "game over" : null }
-        <div class="header">
-          <div className={`header__cash ${ users < wageBill ? "header__cash--negative" : null }`}  >Cash: ${ cash }</div>
-          <div class="header__time"><TimeContainer time={time} /></div>
+        <div className="header">
+          <div className={`header__cash ${ users < wageBill ? "header__cash--negative" : null }`}  >
+            <CurrencyDisplay value={cash} />
+          </div>
+          <div className="header__time"><TimeContainer time={time} /></div>
         </div>
-        <div>User Growth: { userGrowth }</div>
-        <div>User Churn: { userChurn }</div>
-        <div>Wage Bill: ${ wageBill }</div>
-        <div>Users: { users } / MRR: ${ users }</div>
-        <div>Product Score: { productScore }/100</div>
-        <div>Dev Resources: { devResources }</div>
-        { upgrades.sales.map( ( elem ) => <UpgradeButton data={elem} cash={cash} handleUpgradeClick={handleUpgradeClick} /> ) } <br />
-        { upgrades.dev.map( ( elem ) => <UpgradeButton data={elem} cash={cash} handleUpgradeClick={handleUpgradeClick} /> ) }
+        <div className="main">
+          <div className="stats__wrapper">
+            <div className="stats__container">
+              <div className="stats__section">
+                <div><span>👥 Users: { users }<span>MRR: ${ users }</span></span></div>
+                <div>📈 Growth: +{ userGrowth } p/m</div>
+                <div>📉 Churn: { userChurn } p/m</div>
+              </div>
+              <div className="stats__section">
+                <div><span className={`${ users / 200 > devResources ? "negative" : "" }`}>💻 Product Score: { productScore }/100</span></div>
+                <div>🤑 Wage Bill: ${ wageBill }</div>
+                <div>👨🏻‍💻 Dev Resources: { devResources }</div>
+              </div>
+              <div className="stats__section stats__section--help">
+                <div>You currently have the resources to provide for { devResources * 200 } users.</div>
+              </div>  
+            </div>
+          </div>
+          <div className="upgrades__wrapper">
+            <div className="upgrades__container">
+              <div className="upgrades__column">
+                { upgrades.sales.map( ( elem ) => <UpgradeButton data={elem} cash={cash} handleUpgradeClick={handleUpgradeClick} /> ) } <br />
+              </div>
+              <div className="upgrades__column">
+                { upgrades.dev.map( ( elem ) => <UpgradeButton data={elem} cash={cash} handleUpgradeClick={handleUpgradeClick} /> ) }
+              </div>
+            </div>
+          </div>
+        </div>
       </>
     );
   }

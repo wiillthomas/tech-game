@@ -5,7 +5,7 @@ export default {
             name: "Hire Sales",
             users: 0,
             userGrowth: 5,
-            cost: 10,
+            cost: 100,
             wage: 0,
             devResource: 0,
         },
@@ -43,20 +43,28 @@ export default {
             devResource: 1,
         },
         {
-            name: "Upgrade Infrastructure",
+            name: "Buy Server Rack",
             users: 0,
             cost: 10000,
+            wage: 0,
+            userGrowth: 0,
+            devResource: 3,
+        },
+        {
+            name: "Modernise Tech Stack",
+            users: 0,
+            cost: 100000,
             wage: 0,
             userGrowth: 0,
             devResource: 10,
         },
         {
-            name: "Modernise Tech Stack",
+            name: "Buy Data Center",
             users: 0,
-            cost: 10000,
+            cost: 1000000,
             wage: 0,
             userGrowth: 0,
-            devResource: 100,
+            devResource: 20,
         }
     ]
 }

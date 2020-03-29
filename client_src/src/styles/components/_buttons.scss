@@ -1,14 +1,48 @@
 .button {
-    border: 3px solid white;
+    border: 1px solid white;
     border-radius: 5px;
     background-color: transparent;
     color: white;
     padding: 5px 10px;
     cursor: pointer;
     transition: all 0.3s;
+    box-shadow: 0 0 0px 5px black;
+    &:after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: white;
+        opacity: 0.02;
+        transition: opacity 0.3s;
+        box-shadow: 0 0 5px black;
+    }
 
     &:hover {
-        color: black;
-        background-color: white;
+        &:after {
+            opacity: 0.14
+        }
+    }
+
+    &:active {
+        &:after {
+            opacity: 0.5;
+        }
+    }
+
+    &--disabled {
+        opacity: 0.1;
+        pointer-events: none;
+        &:after {
+            opacity: 0.0;
+        }
+        
+        &:hover {
+            &:after {
+                opacity: 0.0
+            }
+        }
     }
 }
