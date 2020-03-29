@@ -24,5 +24,4 @@ export default [
         cash: 0.9,
         users: 1
     }
-
 ]

@@ -31,6 +31,7 @@ export default {
             userGrowth: 5,
             cost: 250000,
             wage: 0,
+            devResource: 0,
         },
     ],
     dev: [
