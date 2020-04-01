@@ -61,6 +61,24 @@ class App extends Component {
   
   }
 
+  handleReset = () => {
+    this.setState({
+      play: true,
+      helpModal: false,
+      gameOver: false,
+      time: 1,
+      cash: 10000,
+      users: 0,
+      userGrowth: 0,
+      userChurn: 0,
+      productScore: 100,
+      productGrowth: 0,
+      devResources: 1,
+      wageBill: 100,
+      events: []
+    })
+  }
+
   toggleHelp = () => {
     const { play, helpModal } = this.state
 
@@ -87,11 +105,11 @@ class App extends Component {
 
   render() { 
     const { cash, users, productScore, time, devResources, userGrowth, userChurn, wageBill, gameOver, events, helpModal } = this.state;
-    const { handleUpgradeClick, toggleHelp } = this;
+    const { handleUpgradeClick, toggleHelp, handleReset } = this;
 
     return (
       <>
-        { gameOver ? <GameOverModal users={users} /> : null }
+        { gameOver ? <GameOverModal users={users} handleReset={handleReset} /> : null }
         { helpModal ? <HelpModal toggleHelp={toggleHelp} /> : null }
         <div className="header">
           <div className={`header__cash ${ users < wageBill ? "header__cash--negative" : null }`}  >

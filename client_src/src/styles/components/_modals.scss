@@ -17,6 +17,9 @@
         background: black;
         position: relative;
         border-radius: 5px;
+        & > * {
+            z-index: 101
+        }
         &:after {
             content: " ";
             position: absolute;
@@ -38,7 +41,11 @@
                 background-size: contain;
             }
         }
-        button {
+        &--game-over {
+            display: flex;
+            align-items: center;
+        }
+        button.close {
             position: absolute;
             top: 10px;
             right: 10px;

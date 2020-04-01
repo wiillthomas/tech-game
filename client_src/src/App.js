@@ -10,8 +10,9 @@ export default function App() {
   else if ( page == "game" ) return <GamePage />
 
 }
-// Create game over screen & upload high score
-// Create Start Screen
+
+
+// Style FE of high scores
 // Responsivity
 // Go backend for high scores
 // Create more random events

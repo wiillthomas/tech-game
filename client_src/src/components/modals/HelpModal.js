@@ -7,8 +7,8 @@ export default ( props ) => {
 
     return (
             <div className="modal__background">
-                <div className="modal__container modal__container--help">>
-                    <button className="button" onClick={() => toggleHelp() }>x</button>
+                <div className="modal__container modal__container--help">
+                    <button className="button close" onClick={() => toggleHelp() }>x</button>
                     <div className="help-image">
                     </div>
                 </div> 
