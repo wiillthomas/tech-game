@@ -16,7 +16,10 @@ body {
         display: flex;
         justify-content: space-around;
         align-items: center;
-        height: 80%
+        height: 80%;
+        @include smaller( 860px ) {
+            flex-direction: column-reverse;
+        }
     }
 
     .header {

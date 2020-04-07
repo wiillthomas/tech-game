@@ -1,10 +1,10 @@
 .modal {
     &__background {
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
+        width: 101vw;
+        height: 101vh;
         background: rgba(0, 0, 0, 0.9);
         display: flex;
         justify-content: center;
@@ -44,6 +44,7 @@
         &--game-over {
             display: flex;
             align-items: center;
+            justify-content: center;
         }
         button.close {
             position: absolute;

@@ -108,7 +108,7 @@ class App extends Component {
     const { handleUpgradeClick, toggleHelp, handleReset } = this;
 
     return (
-      <>
+      <div className="game-page__wrapper" > 
         { gameOver ? <GameOverModal users={users} handleReset={handleReset} /> : null }
         { helpModal ? <HelpModal toggleHelp={toggleHelp} /> : null }
         <div className="header">
@@ -141,16 +141,16 @@ class App extends Component {
           <div className="upgrades__wrapper">
             <div className="upgrades__container">
               <div className="upgrades__column">
-                { upgrades.sales.map( ( elem ) => <UpgradeButton data={elem} cash={cash} handleUpgradeClick={handleUpgradeClick} /> ) } <br />
+                { upgrades.sales.map( ( elem, idx ) => <UpgradeButton key={idx} data={elem} cash={cash} handleUpgradeClick={handleUpgradeClick} /> ) } <br />
               </div>
               <div className="upgrades__column">
-                { upgrades.dev.map( ( elem ) => <UpgradeButton data={elem} cash={cash} handleUpgradeClick={handleUpgradeClick} /> ) }
+                { upgrades.dev.map( ( elem, idx ) => <UpgradeButton key={idx} data={elem} cash={cash} handleUpgradeClick={handleUpgradeClick} /> ) }
               </div>
             </div>
           </div>
         </div>
         <RandomEventsContainer events={events} />
-      </>
+      </div>
     );
   }
 }

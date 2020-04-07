@@ -7,8 +7,8 @@ export default function RandomEventsContainer( props ) {
 
     return (
         <div className="random-events__container">
-            { events.map( ( elem ) => (
-                <Event elem={ elem } />
+            { events.map( ( elem, idx ) => (
+                <Event key={idx} elem={ elem } />
             ) ) }
         </div>
     )

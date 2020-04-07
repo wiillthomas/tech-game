@@ -20,7 +20,7 @@ export default function StartPage( props ){
                         <li>Random events may occour that affect your cash &amp; user base!</li>
                     </ul>
                 </div>                
-                <button class="button" onClick={() => setPage("game")}>Start Game</button>
+                <button className="button" onClick={() => setPage("game")}>Start Game</button>
             </div>
         </div>
     )

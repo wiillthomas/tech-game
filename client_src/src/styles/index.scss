@@ -1,7 +1,12 @@
+@import "./mixins";
+
 @import "./components/random_events";
 @import "./components/app";
 @import "./components/buttons";
 @import "./components/upgrades";
 @import "./components/stats";
 @import "./components/modals";
-@import "./components//start_page";
+
+@import "./pages/game";
+@import "./pages/start";
+@import "./pages/game_over";

@@ -15,7 +15,9 @@
         align-items: center;
         border-radius: 5px;
         padding: 30px;
-
+        @include smaller( 425px ) {
+            height: auto;
+        }
         h1 {
             margin-bottom: 10px;
         }

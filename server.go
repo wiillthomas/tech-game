@@ -6,19 +6,33 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"strconv"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 )
 
 type Score struct {
-	name  string
-	score int
+	Name  string `json:"name"`
+	Score int    `json:"score"`
 }
 
 func main() {
 
-	db, err := sql.Open("mysql",
-		"root:password@tcp(127.0.0.1:3306)/prod")
+	err := godotenv.Load()
+
+	if err != nil {
+		log.Fatal("Couldn't open env file")
+	}
+
+	sqlRootPass := os.Getenv("MYSQL_ROOT_PASSWORD")
+
+	fmt.Printf("%s", sqlRootPass)
+
+	connectionString := "root:" + sqlRootPass + "@tcp(db)/prod"
+
+	db, err := sql.Open("mysql", connectionString)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -27,11 +41,13 @@ func main() {
 	leaderboard := func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case "GET":
+
 			fmt.Println("Geting High Scores")
 			w.Header().Set("Content-Type", "application/json")
-			je := json.NewEncoder(w)
 
-			posts, err := db.Query("select name, score from highscores")
+			var output []Score
+
+			posts, err := db.Query("select name, score from highscores order by score desc limit 5;")
 
 			defer posts.Close()
 
@@ -41,28 +57,51 @@ func main() {
 				if err := posts.Scan(&name, &score); err != nil {
 					log.Fatal(err)
 				}
-				fmt.Printf("%s", name)
-				fmt.Printf("%v", score)
-				// Do something (can be a function that I pass as a parameter)
+				post := Score{name, score}
+				output = append(output, post)
 			}
 
 			if err != nil {
+				fmt.Println("error")
 				return
 			}
-			je.Encode(posts)
+
+			json.NewEncoder(w).Encode(output)
 
 		case "POST":
 			fmt.Println("Post Request")
-			insert, err := db.Query("INSERT INTO highscore VALUES('" + "')")
+			w.Header().Set("Content-Type", "application/json")
+			jd := json.NewDecoder(r.Body)
+
+			aScore := &Score{}
+
+			err := jd.Decode(&aScore)
+
 			if err != nil {
-				panic(err.Error())
+				fmt.Println("err decoding")
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+
+			insert, err := db.Query("INSERT INTO highscores VALUES('" + aScore.Name + "','" + strconv.Itoa(aScore.Score) + "')")
+
+			if err != nil {
+				fmt.Println("err posting to db")
+
+				w.WriteHeader(http.StatusInternalServerError)
+				return
 			}
 			defer insert.Close()
+
+			fmt.Println("Post Success")
+			w.WriteHeader(http.StatusOK)
+
 		}
 	}
 
 	fs := http.FileServer(http.Dir("./client_src/build"))
+
 	http.Handle("/", fs)
-	http.HandleFunc("/leaderboard", leaderboard)
+	http.HandleFunc("/api/leaderboard", leaderboard)
 	http.ListenAndServe(":8080", nil)
 }

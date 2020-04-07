@@ -10,10 +10,3 @@ export default function App() {
   else if ( page == "game" ) return <GamePage />
 
 }
-
-
-// Style FE of high scores
-// Responsivity
-// Go backend for high scores
-// Create more random events
-// Write FE tests

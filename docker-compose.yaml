@@ -9,13 +9,14 @@ services:
     restart: "always"
     volumes:
       - ./:/usr/src/app
+    depends_on: 
+      - db
+    networks:
+      - app_network
   db:
     image: mysql:5.7
     restart: always
     environment:
-      MYSQL_DATABASE: '${MYSQL_DATABASE}'
-      MYSQL_USER: '${MYSQL_USER}'
-      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
       MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
     ports:
       - '3306:3306'
@@ -23,4 +24,10 @@ services:
       - '3306'
     volumes:
       - ./data:/var/lib/mysql
+    networks:
+      - app_network
+    command: bash -c "mysql -h 127.0.0.1 -P 3306 -u root -p && ${MYSQL_ROOT_PASSWORD} && CREATE DATABASE prod; && USE prod; && CREATE TABLE highscores (name varchar(255), score integer); "
+networks:
+  app_network:
+    driver: bridge
 
