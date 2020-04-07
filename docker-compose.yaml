@@ -26,7 +26,6 @@ services:
       - ./data:/var/lib/mysql
     networks:
       - app_network
-    command: bash -c "mysql -h 127.0.0.1 -P 3306 -u root -p && ${MYSQL_ROOT_PASSWORD} && CREATE DATABASE prod; && USE prod; && CREATE TABLE highscores (name varchar(255), score integer); "
 networks:
   app_network:
     driver: bridge
